@@ -19,15 +19,11 @@ $settings['twig'] = [
 ];
 
 // Database settings
-$settings['db']['host'] = '172.24.0.3';
-$settings['db']['username'] = 'root';
-$settings['db']['password'] = 'root';
-$settings['db']['database'] = 'forecast';
+$settings['db']['host'] = 'localhost';
+$settings['db']['username'] = '';
+$settings['db']['password'] = '';
+$settings['db']['database'] = '';
 $settings['db']['charset'] = 'utf8';
 $settings['db']['collation'] = 'utf8_unicode_ci';
-
-// OpenWheater settings
-$settings['ow']['apiKey'] = '5660a233b8792be95c5e75b3c93d1de4';
-$settings['ow']['url'] = 'https://api.openweathermap.org/data/2.5/weather?';
 
 return $settings;

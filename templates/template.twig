@@ -33,6 +33,24 @@
         .results ul{
             text-align: left;
         }
+        .grid{
+            display: grid;
+            grid-template-columns: repeat(auto-fill,minmax(350px,350px));
+            grid-gap: 10px;
+            justify-content: center;
+        }
+        .hero h2{
+            font-size: 2em;
+            margin: 0 0 30px 0;
+        }
+        .results .button{
+            float: right;
+        }
+        .last-update{
+            color: #2e2e2e;
+            font-size: 10px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -40,7 +58,7 @@
     <div class="hero-body">
         <div class="container">
             <h1 class="title">
-                Forecast Application
+                <a href="/">Forecast Application</a>
             </h1>
             <h2 class="subtitle">
                 Search the weather

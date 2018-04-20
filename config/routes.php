@@ -7,11 +7,11 @@ use App\openWheather;
 $app->get('/', function (Request $request, Response $response) {
 
     // fetch all rows as collection
-    $city_id = $this->db->table('favourites')->select('city_id')->get()->toArray();
+    $city_name = $this->db->table('favourites')->select('city_name')->get()->toArray();
 
     $ow = new openWheather();
 
-    $favourites = $ow->searchByIds(array_column($city_id, 'city_id'));
+    $favourites = $ow->searchByIds(array_column($city_name, 'city_name'));
 
     $viewData = [
         'favourites' => $favourites
@@ -49,16 +49,30 @@ $app->get('/city/{city}', function (Request $request, Response $response) {
 
 })->setName('city');
 
-$app->get('/city/add/{city_id}', function (Request $request, Response $response) {
+$app->get('/city/add/{city_name}', function (Request $request, Response $response) {
 
-    $this->db->table('favourites')->insert(['city_id' => $request->getAttribute('city_id')]);
+    try{
+        $this->db->table('favourites')->insert(['city_name' => $request->getAttribute('city_name')]);
+    }catch (Exception $e){
+        $viewData = [
+            'message' => $e
+        ];
+        return $this->get('view')->render($response, 'error.twig', $viewData);
+    }
 
     return $this->response->withRedirect('/');
 });
 
-$app->get('/city/remove/{city_id}', function (Request $request, Response $response) {
+$app->get('/city/remove/{city_name}', function (Request $request, Response $response) {
 
-    $this->db->table('favourites')->where('city_id', '=', $request->getAttribute('city_id'))->delete();
+    try{
+        $this->db->table('favourites')->where('city_name', '=', $request->getAttribute('city_name'))->delete();
+    }catch (Exception $e){
+        $viewData = [
+            'mesasge' => $e
+        ];
+        return $this->get('view')->render($response, 'error.twig', $viewData);
+    }
 
     return $this->response->withRedirect('/');
 });

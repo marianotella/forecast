@@ -1,0 +1,34 @@
+{% extends 'template.twig' %}
+
+{% block content %}
+
+    <section class="hero results {{ weather.city.id ? 'is-primary' : 'is-danger' }}">
+        <div class="hero-body">
+            <div class="hero">
+                {% if message %}
+                    <div class="error">
+                        <h2 class="has-text-centered">The city is already in favourites</h2>
+                    </div>
+                {% endif %}
+
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function initMap() {
+            var uluru = {lat: {{ weather.city.lat }}, lng: {{ weather.city.lon }} };
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 4,
+                center: uluru
+            });
+            var marker = new google.maps.Marker({
+                position: uluru,
+                map: map
+            });
+        }
+    </script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCWnVzpIuta4tzjUse7812QWIntrt9DhrY&callback=initMap">
+    </script>
+{% endblock %}
