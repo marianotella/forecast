@@ -1,0 +1,49 @@
+{% extends 'template.twig' %}
+
+{% block content %}
+
+    <section class="hero results {{ weather.city.id ? 'is-primary' : 'is-danger' }}">
+        <div class="hero-body">
+            <div class="hero">
+                {% if weather.city.id %}
+                    <div class="info">
+                        <p class="title">{{ weather.city.name }} - {{ weather.city.country }}</p>
+                        <p class="subtitle">Temperature {{ weather.temperature.getValue()|round(1, 'floor') }} ºC</p>
+                        <p class="">Rain probability {{ weather.precipitation.getUnit() }}%</p>
+                        <p class="">Last update {{ weather.lastUpdate.getTimestamp()|date("F jS \\a\\t g:ia") }}</p>
+                        <ul>
+                            <li>Min: {{ weather.temperature.min.getValue()|round(1, 'floor') }} ºC - Max: {{ weather.temperature.max.getValue()|round(1, 'floor') }} ºC</li>
+                            <li>Humidity: {{ weather.humidity }}</li>
+                            <li>Pressure: {{ weather.pressure }}</li>
+                            <li>Pressure: {{ weather.city.id }}</li>
+                        </ul>
+                        <a href="/city/add/{{ weather.city.id }}" class="btn button">Add to favourites</a>
+                    </div>
+                    <div id="map"></div>
+                {% else %}
+                    <div class="error">
+                        <h2>The city was not found</h2>
+                    </div>
+                {% endif %}
+
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function initMap() {
+            var uluru = {lat: {{ weather.city.lat }}, lng: {{ weather.city.lon }} };
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 4,
+                center: uluru
+            });
+            var marker = new google.maps.Marker({
+                position: uluru,
+                map: map
+            });
+        }
+    </script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCWnVzpIuta4tzjUse7812QWIntrt9DhrY&callback=initMap">
+    </script>
+{% endblock %}

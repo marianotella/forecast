@@ -1,0 +1,45 @@
+{% extends 'template.twig' %}
+
+{% block content %}
+
+    {% if favourites %}
+    <section class="hero results {{ weather.city.id ? 'is-primary' : 'is-danger' }}  ">
+        <div class="hero-body">
+            <div class="hero">
+            <h2>Favourite Cities</h2>
+                <div class="columns">
+                {% for favourite in favourites %}
+                {% if favourite.city.id %}
+                <div class="column">
+                    <div class="card">
+                        <header class="card-header">
+                            <p class="card-header-title">
+                                {{ favourite.city.name }}
+                            </p>
+                            <a href="#" class="card-header-icon" aria-label="more options">
+                            </a>
+                        </header>
+                        <div class="card-content">
+                            <div class="content">
+                                <ul>
+                                    <li>Min: {{ favourite.temperature.min.getValue()|round(1, 'floor') }} ºC - Max: {{ favourite.temperature.max.getValue()|round(1, 'floor') }} ºC</li>
+                                    <li>Humidity: {{ favourite.humidity }}</li>
+                                    <li>Pressure: {{ favourite.pressure }}</li>
+                                </ul>
+                                <time datetime="2016-1-1">Last update {{ weather.lastUpdate.getTimestamp()|date("F jS \\a\\t g:ia") }}</time>
+                            </div>
+                        </div>
+                        <footer class="card-footer">
+                            <a href="/city/{{ favourite.city.id }}" class="card-footer-item">Show more info</a>
+                            <a href="/city/remove/{{ favourite.city.id }}" class="card-footer-item">Delete</a>
+                        </footer>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+{% endblock %}
